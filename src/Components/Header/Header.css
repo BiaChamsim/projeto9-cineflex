@@ -1,0 +1,16 @@
+.header{
+    width: 100vh;
+    height: 67px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+h1{
+    font-family: 'Roboto';
+    color:#E8833A;
+    font-size: 34px;
+    font-weight: 400;
+    
+}

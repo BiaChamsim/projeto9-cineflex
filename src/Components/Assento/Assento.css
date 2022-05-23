@@ -1,0 +1,110 @@
+.container{
+    width: 100vh;
+}
+
+.itens{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 24px;    
+}
+
+.assentos{
+    font-family: 'Roboto';
+    font-size: 14px;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #808F9D;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin: 8px;   
+}
+
+.opcoes{
+    width: 100vh;
+    font-family: 'Roboto';
+    color:#4E5A65;
+    display: flex;    
+    justify-content: space-around;
+}
+
+.selecionado, .disponivel, .indisponivel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bolinha-s{
+    width: 24px;
+    height: 24px;
+    background: #8DD7CF;
+    border: 1px solid #1AAE9E;
+    border-radius: 17px;
+    
+}
+
+.bolinha-d{
+    width: 24px;
+    height: 24px;
+    background: #C3CFD9;
+    border: 1px solid #7B8B99;
+    border-radius: 17px;
+
+}
+
+.bolinha-i{
+    width: 24px;
+    height: 24px;
+    background: #FBE192;
+    border: 1px solid #F7C52B;
+    border-radius: 17px;
+}
+
+.inputs{
+    width: 100vh;
+    font-family: 'Roboto';
+    font-size: 18px;
+    margin-left: 24px;
+    color: #293845;
+}
+
+input{
+    width: 327px;
+    height: 50px;
+    background: #FFFFFF;
+    border: 1px solid #D5D5D5;
+    border-radius: 3px;
+}
+
+.reserva{
+    display: flex;
+    justify-content: center;
+    margin-top: 56px;
+}
+
+.reserva > p{
+    width: 225px;
+    height: 42px;
+    background: #E8833A;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#FFFFFF;
+    font-style: normal;
+    letter-spacing: 0.04em;
+    font-size: 18px;
+}
+
+.true{
+    background-color: #C3CFD9;
+}
+
+.false{
+    background-color:#FBE192;
+}
+
+.selected{
+    background-color: #8DD7CF;
+}
