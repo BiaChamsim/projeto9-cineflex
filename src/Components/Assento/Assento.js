@@ -1,9 +1,17 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Assento.css'
 
-export default function Assento(){
+export default function Assento(props){
+
+    const {assentoEscolhido,
+        setAssentoEscolhido, 
+        cpf,
+        setCpf,
+        nome, 
+        setNome,
+        setFilme} = props
 
     const  { assentoId }  = useParams();
 
@@ -13,10 +21,16 @@ export default function Assento(){
 
     const [assentosNovos, setAssentosNovos] = useState([]);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${assentoId}/seats`)
         promise.then(resposta => {
             setAssentos(resposta.data.seats)
+            setFilme(resposta.data)
+
+            console.log(resposta.data)
+
             setHora({url: resposta.data.movie.posterURL, dia: resposta.data.day.weekday, hora: resposta.data.name})
         });
         promise.catch(erro => alert(`Erro ao buscar assentos: ${erro.message}`));
@@ -37,7 +51,36 @@ export default function Assento(){
             return assento;
         })
 
-        setAssentosNovos(novosAssentos);        
+        setAssentosNovos(novosAssentos)
+        const assentoEscolhido = assentosNovos.filter(assentosNovo => assentosNovo.isSelected === true)
+        setAssentoEscolhido(assentoEscolhido)   
+
+    }
+
+    function enviarInfo(event){
+        event.preventDefault();
+        
+        if(assentoEscolhido.length === 0){
+            alert("Escolha ao menos um assento")
+            return
+        } 
+        if(cpf === null){
+            alert("CPF inválido")
+            return
+        }
+
+        const body = {
+            ids: assentoEscolhido.map(assento => assento.id),
+            name: nome,
+            cpf: cpf
+        }
+        const request = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", body)
+        request.then(response => {
+            navigate("/sucesso")
+            console.log(response)
+        
+        })
+        
     }
 
     return(
@@ -63,17 +106,18 @@ export default function Assento(){
                     </div>
                 </div>
                 <div className="inputs">
-                    <div className="nome">
-                        <p>Nome do comprador:</p>
-                        <input></input>
-                    </div>
-                    <div className="cpf">
-                        <p>CPF do comprador:</p>
-                        <input></input>
-                    </div>
-                    <div className="reserva">
-                        <p>Reservar assento(s)</p>
-                    </div>
+                    <form className="campos-input" onSubmit={enviarInfo}>
+                        <label for="campoNome" >Nome do comprador</label>
+                        <input type="text" id="campoNome" value={nome} required onChange={(event) => setNome(event.target.value)} placeholder="Digite seu nome..."></input>
+                        
+                        <label for="campoCPF">CPF do comprador</label>
+                            <input type="text" id="campoCPF" value={cpf} required onChange={(event) => setCpf(event.target.value)} placeholder="Digite seu CPF..."></input>
+                        
+                        <div className="reserva">
+                            <button>Reservar assento(s)</button>
+                        </div>
+                    </form>
+
                     <div className="rodape">
                         <img src={hora.url}/> <p>{hora.dia}</p> <p>{hora.hora}</p>
                     </div>
